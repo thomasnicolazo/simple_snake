@@ -164,8 +164,16 @@ void initApple(int x, int y)
 		fprintf(stderr, "ERROR: head shouold not be null at initApple");
 	}
     do
-    {
-        Apple *fApple = malloc(sizeof(Apple));	
+    {   
+        if(apple)
+        {
+            free(apple);
+        }
+        Apple *fApple = malloc(sizeof(Apple));
+        if (!fApple) {
+            fprintf(stderr, "ERROR: Memory allocation failed in initApple\n");
+            return;
+        }
 	    fApple->x = x + (rand() % (GRID_CELL - 6) + 3) * (GRID_SIZE/ GRID_CELL);
 	    fApple->y = y + (rand() % (GRID_CELL - 6) + 3) * (GRID_SIZE/ GRID_CELL);
 	    apple = fApple;
@@ -174,7 +182,7 @@ void initApple(int x, int y)
         {
             if (apple->x == tmp->x && apple->y == tmp->y)
             {
-                free(apple);
+                if(apple) free(apple);
                 isOnSnake = true;
                 break;
             }
@@ -209,7 +217,10 @@ void checkCollisionApple()
         if(tmp->x == apple->x && tmp->y == apple->y)
         {
             score++;
-            free(apple);
+            if (apple)
+            {
+                free(apple);
+            }  
             initApple(gridPositionX,gridPositionY);
             increaseSnake();
         }
