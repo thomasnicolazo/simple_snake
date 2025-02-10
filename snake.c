@@ -167,7 +167,7 @@ void initApple(int x, int y)
     {   
         if(apple)
         {
-            free(apple);
+            apple = NULL;
         }
         Apple *fApple = malloc(sizeof(Apple));
         if (!fApple) {
@@ -220,6 +220,7 @@ void checkCollisionApple()
             if (apple)
             {
                 free(apple);
+                apple = NULL;
             }  
             initApple(gridPositionX,gridPositionY);
             increaseSnake();
@@ -300,7 +301,7 @@ int main(void)
     {
         fprintf(stderr,"ERROR: Failed SDL_Init");
     }
-    window = SDL_CreateWindow("Snake", WINDOW_X, WINDOW_Y, WINDOW_WIDTH, WINDOW_HEIGHT,SDL_WINDOW_BORDERLESS);
+    window = SDL_CreateWindow("Snake", WINDOW_X, WINDOW_Y, WINDOW_WIDTH, WINDOW_HEIGHT,SDL_WINDOW_MAXIMIZED);
     
     if(!window)
     {
